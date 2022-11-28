@@ -1,0 +1,1 @@
+Az sql fájlokat, növekvő sorrendbe kell beolvasni. 
