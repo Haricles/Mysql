@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Üzenőfal</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function(event) {
+                event.preventDefault();
+                var name = $('#name').val();
+                var message = $('#message').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/add_message',
+                    data: { name: name, message: message },
+                    success: function(response) {
+                        alert(response.message);
+                        $('#name').val('');
+                        $('#message').val('');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Üzenőfal</h1>
+    <form>
+        <label for="name">Név:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="message">Üzenet:</label>
+        <textarea id="message" name="message" required></textarea><br><br>
+        <input type="submit" value="Küldés">
+    </form>
+    <h2>Üzenetek:</h2>
+    <ul id="message-list">
+        {% for message in messages %}
+            <li>{{ message.name }} - {{ message.timestamp }}: {{ message.message }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
